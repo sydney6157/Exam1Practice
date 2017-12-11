@@ -2,7 +2,7 @@
 PRACTICE Test 1, problem 3.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
+         their colleagues and Sydney Larson.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
@@ -97,6 +97,20 @@ def run_test_problem3a():
 
     window3.close_on_mouse_click()
 
+    # Window 4:
+    title = 'Problem 3a. Test 4: Start at (30, 30), 20 lines'
+    window3 = rg.RoseWindow(450, 300, title)
+
+    # Test 5 (it is on window 4):
+    point = rg.Point(50, 50)
+    expected = 153
+    answer = problem3a(window3, point, 15)
+    print()
+    print('Test 5 expected:', expected)
+    print('       actual:  ', answer)
+
+    window3.close_on_mouse_click()
+
     # ------------------------------------------------------------------
     # TO DO: 2 (continued).
     # Below this comment (or integrated with one of the above tests,
@@ -136,6 +150,27 @@ def problem3a(window, point, n):
         :type point:  rg.Point
         :type n:      int
     """
+    inc = 0
+    incc = 0
+    k = 1
+    tot = 0
+    for x in range (n):
+        end = rg.Point(point.x+inc,point.y+50+incc)
+        start = rg.Point(point.x+inc,point.y+incc)
+        line = rg.Line(start,end)
+        inc += 20
+        incc += 10
+        if line.thickness <= 13 and (k+2 <= 13):
+            line.thickness = k
+            k += 2
+        else:
+            line.thickness = 13
+        tot += line.thickness
+        line.attach_to(window)
+    window.render()
+    return tot
+
+
     # ------------------------------------------------------------------
     # TODO: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
@@ -200,6 +235,15 @@ def problem3b(m, point1):
         :type m:      int
         :type point1: rg.Point
     """
+    window = rg.RoseWindow(400,650)
+    total = 0
+    for k in range (m):
+        point = rg.Point(point1.x,point1.y+(60*k))
+        total = total + problem3a(window,point,(3+(2*k)))
+    window.render()
+    window.close_on_mouse_click()
+    return total
+
     # ------------------------------------------------------------------
     # TODO: 4. Implement and test this function.
     #          Tests have been written for you (above).
