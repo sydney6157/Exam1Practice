@@ -2,7 +2,7 @@
 PRACTICE Test 1, problem 2.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
+         their colleagues and Sydney Larson.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
@@ -101,6 +101,21 @@ def problem2a(circle, rectangle, window):
       :type rectangle: rg.Rectangle
       :type window:    rg.RoseWindow
     """
+    circle.attach_to(window)
+    rectangle.attach_to(window)
+    window.render()
+    window.continue_on_mouse_click()
+    upcor = rectangle.get_upper_right_corner()
+    downcor = rectangle.get_lower_left_corner()
+    start = rg.Point(upcor.x,upcor.y)
+    end = rg.Point(downcor.x,downcor.y)
+    line = rg.Line(start,end)
+    line.arrow = 'last'
+    line.attach_to(window)
+    window.render()
+    window.continue_on_mouse_click()
+    circle.fill_color = rectangle.outline_color
+    window.render()
     # ------------------------------------------------------------------
     # TODO: 2. Implement and test this function.
     #          Tests have been written for you (above).
@@ -172,6 +187,18 @@ def problem2b(rect, n, delta, win):
       :type delta:  int
       :type win:    rg.RoseWindow
     """
+    rect.attach_to(win)
+
+
+    for x in range(n-1):
+        delt = delta * (x+1)
+        cor1 = rg.Point(rect.get_upper_left_corner().x-delt,
+                        rect.get_upper_left_corner().y-delt)
+        cor2 = rg.Point(rect.get_lower_right_corner().x+delt,
+                        rect.get_lower_right_corner().y+delt)
+        rectangle = rg.Rectangle(cor1,cor2)
+        rectangle.attach_to(win)
+        win.render()
     # ------------------------------------------------------------------
     # TODO: 3. Implement and test this function.
     #          Tests have been written for you (above).
